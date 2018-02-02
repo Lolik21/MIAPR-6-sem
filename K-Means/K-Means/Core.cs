@@ -1,76 +1,176 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Documents;
-using System.Windows.Media;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="Core.cs" company="my">
+//   free
+// </copyright>
+// <summary>
+//   Defines the Core type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace K_Means
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Windows;
+
+    /// <summary>
+    /// The core.
+    /// </summary>
     public class Core
     {
-        public List<KClass> Classes { get; set; }
-        public List<Point> Points { get; set; }
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Core"/> class.
+        /// </summary>
         public Core()
         {
-            Classes = new List<KClass>();
+            this.Classes = new List<KClass>();
         }
 
+        /// <summary>
+        /// Gets or sets the classes.
+        /// </summary>
+        public List<KClass> Classes { get; set; }
+
+        /// <summary>
+        /// Gets or sets the points.
+        /// </summary>
+        public List<Point> Points { get; set; }
+
+        /// <summary>
+        /// The do generate.
+        /// </summary>
+        /// <param name="classesCount">
+        /// The classes count.
+        /// </param>
+        /// <param name="objectsCount">
+        /// The objects count.
+        /// </param>
+        /// <param name="canvasHeight">
+        /// The canvas height.
+        /// </param>
+        /// <param name="canvasWidth">
+        /// The canvas width.
+        /// </param>
         public void DoGenerate(int classesCount, int objectsCount, int canvasHeight, int canvasWidth)
         {
-            Classes.Clear();
-            Points = PointHelper.GetRandomPoints(objectsCount, canvasHeight, canvasWidth).ToList();
-            SetRandomClasses(this.Classes, this.Points, classesCount);
-            FillClasses(this.Classes,this.Points);
+            this.Classes.Clear();
+            this.Points = PointHelper.GetRandomPoints(objectsCount, canvasHeight, canvasWidth).ToList();
+            this.SetRandomClasses(this.Classes, this.Points, classesCount);
+            this.FillClasses(this.Classes, this.Points);
         }
 
+        /// <summary>
+        /// The do calculate.
+        /// </summary>
+        /// <param name="classesCount">
+        /// The classes count.
+        /// </param>
+        /// <param name="objectsCount">
+        /// The objects count.
+        /// </param>
+        /// <param name="canvasHeight">
+        /// The canvas height.
+        /// </param>
+        /// <param name="canvasWidth">
+        /// The canvas width.
+        /// </param>
         public void DoCalculate(int classesCount, int objectsCount, int canvasHeight, int canvasWidth)
         {
-            if (Classes.Count == 0) DoGenerate(classesCount,objectsCount,canvasHeight,canvasWidth);
-            DoKMeanCalculation(Classes, Points);
+            if (this.Classes.Count == 0)
+            {
+                this.DoGenerate(classesCount, objectsCount, canvasHeight, canvasWidth);
+            }
+
+            this.DoKMeanCalculation(this.Classes, this.Points);
         }
 
+        /// <summary>
+        /// The do k mean calculation.
+        /// </summary>
+        /// <param name="classes">
+        /// The classes.
+        /// </param>
+        /// <param name="points">
+        /// The points.
+        /// </param>
         public void DoKMeanCalculation(List<KClass> classes, List<Point> points)
         {
-            while (DoKMeanIteration(classes, points));
-        }
-
-        public bool DoKMeanIteration(List<KClass> classes, List<Point> points)
-        {
-            ClearClasses(classes);
-            FillClasses(classes, points);
-            return ChangeCenters(classes);
-        }
-
-        public void ClearClasses(List<KClass> classes)
-        {
-            foreach (var kClass in classes)
+            while (this.DoKMeanIteration(classes, points))
             {
-                kClass.Points.Clear();
-                kClass.Points.Add(kClass.Center);
             }
         }
 
+        /// <summary>
+        /// The do k mean iteration.
+        /// </summary>
+        /// <param name="classes">
+        /// The classes.
+        /// </param>
+        /// <param name="points">
+        /// The points.
+        /// </param>
+        /// <returns>
+        /// The <see cref="bool"/>.
+        /// </returns>
+        public bool DoKMeanIteration(List<KClass> classes, List<Point> points)
+        {
+            this.ClearClasses(classes);
+            this.FillClasses(classes, points);
+            return this.ChangeCenters(classes);
+        }
+
+        /// <summary>
+        /// The clear classes.
+        /// </summary>
+        /// <param name="classes">
+        /// The classes.
+        /// </param>
+        public void ClearClasses(List<KClass> classes)
+        {
+            foreach (var kclass in classes)
+            {
+                kclass.Points.Clear();
+                kclass.Points.Add(kclass.Center);
+            }
+        }
+
+        /// <summary>
+        /// The fill classes.
+        /// </summary>
+        /// <param name="classes">
+        /// The classes.
+        /// </param>
+        /// <param name="points">
+        /// The points.
+        /// </param>
         public void FillClasses(List<KClass> classes, List<Point> points)
         {
             foreach (var point in points)
             {
-                AddNearestPointToClass(point, classes);
+                this.AddNearestPointToClass(point, classes);
             }
         }
 
+        /// <summary>
+        /// The add nearest point to class.
+        /// </summary>
+        /// <param name="source">
+        /// The source.
+        /// </param>
+        /// <param name="classes">
+        /// The classes.
+        /// </param>
         public void AddNearestPointToClass(Point source, List<KClass> classes)
         {
-            var min = Double.MaxValue;
+            var min = double.MaxValue;
             var nearestClass = new KClass();
-            foreach (var kClass in classes)
+            foreach (var kclass in classes)
             {
-                var dist = PointHelper.GetPointsDistance(kClass.Center, source);
+                var dist = PointHelper.GetPointsDistance(kclass.Center, source);
                 if (dist < min)
                 {
-                    nearestClass = kClass;
+                    nearestClass = kclass;
                     min = dist;
                 }
             }
@@ -81,37 +181,66 @@ namespace K_Means
             }
         }
 
+        /// <summary>
+        /// The change centers.
+        /// </summary>
+        /// <param name="classes">
+        /// The classes.
+        /// </param>
+        /// <returns>
+        /// The <see cref="bool"/>.
+        /// </returns>
         public bool ChangeCenters(List<KClass> classes)
         {
             bool isNotDiffer = false;
-            foreach (var kClass in classes)
+            foreach (var kclass in classes)
             {
-                Point point = GetNewClassCenterPoint(kClass);
-                if (point != kClass.Center)
+                Point point = this.GetNewClassCenterPoint(kclass);
+                if (point != kclass.Center)
                 {
-                    kClass.Center = point;
+                    kclass.Center = point;
                     isNotDiffer = true;
                 }
             }
+
             return isNotDiffer;
         }
 
-        public Point GetNewClassCenterPoint(KClass kClass)
+        /// <summary>
+        /// The get new class center point.
+        /// </summary>
+        /// <param name="kclass">
+        /// The k class.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Point"/>.
+        /// </returns>
+        public Point GetNewClassCenterPoint(KClass kclass)
         {
-            var center = new Point(kClass.Points.Average(point => point.X), 
-                kClass.Points.Average(point => point.Y));
-            return PointHelper.GetNearestPoint(center, kClass.Points);
-
+            var center = new Point(kclass.Points.Average(point => point.X), kclass.Points.Average(point => point.Y));
+            return PointHelper.GetNearestPoint(center, kclass.Points);
         }
 
+        /// <summary>
+        /// The set random classes.
+        /// </summary>
+        /// <param name="classes">
+        /// The classes.
+        /// </param>
+        /// <param name="points">
+        /// The points.
+        /// </param>
+        /// <param name="count">
+        /// The count.
+        /// </param>
         public void SetRandomClasses(List<KClass> classes, List<Point> points, int count)
         {
             var random = new Random();
             for (int i = 0; i < count; i++)
             {
-                var kClass = new KClass() {Center = points[random.Next(points.Count)]};
-                kClass.Points = new List<Point> {kClass.Center};
-                classes.Add(kClass);
+                var kclass = new KClass() { Center = points[random.Next(points.Count)] };
+                kclass.Points = new List<Point> { kclass.Center };
+                classes.Add(kclass);
             }
         }
     }

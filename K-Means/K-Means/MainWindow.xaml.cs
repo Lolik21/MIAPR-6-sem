@@ -54,7 +54,7 @@ namespace K_Means
         {
             (sender as TextBox).Foreground = Brushes.Black;
             string input = (sender as TextBox).Text;
-            if (!Regex.IsMatch(input, @"^\d{1,4}$"))
+            if (!Regex.IsMatch(input, @"^\d{1,6}$"))
             {
                 (sender as TextBox).Foreground = Brushes.Red;
                 LockButtons();
