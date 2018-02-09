@@ -1,125 +1,261 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="MainWindow.xaml.cs" company="no">
+//   no
+// </copyright>
+// <summary>
+//   Interaction logic for MainWindow.xaml
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace K_Means
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Text.RegularExpressions;
+    using System.Threading.Tasks;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Media;
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow
     {
+        /// <summary>
+        /// The class radius.
+        /// </summary>
         private const int ClassRadius = 10;
+
+        /// <summary>
+        /// The object radius.
+        /// </summary>
         private const int ObjectRadius = 1;
 
-        private Core core = new Core();
-        private bool IsValidClasses = false;
-        private bool IsValidObjects = false;
+        /// <summary>
+        /// The myCore.
+        /// </summary>
+        private Core myCore = new Core();
 
+        /// <summary>
+        /// The _is valid classes.
+        /// </summary>
+        private bool isValidClasses;
+
+        /// <summary>
+        /// The _is valid objects.
+        /// </summary>
+        private bool isValidObjects;
+
+        /// <summary>
+        /// The colors.
+        /// </summary>
+        private List<Brush> _brushes = new List<Brush>();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MainWindow"/> class.
+        /// </summary>
         public MainWindow()
         {
-            InitializeComponent();
-            LockButtons();
+            this.InitializeComponent();
+            this.LockButtons();
         }
 
-        private void TbxClasses_TextChanged(object sender, TextChangedEventArgs e)
+        /// <summary>
+        /// The tbx classes text changed.
+        /// </summary>
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The e.
+        /// </param>
+        private void TbxClassesTextChanged(object sender, TextChangedEventArgs e)
         {
-            (sender as TextBox).Foreground = Brushes.Black;
-            string input = (sender as TextBox).Text;
-            if (!Regex.IsMatch(input, @"^\d{1,2}$"))
+            ((TextBox)sender).Foreground = Brushes.Black;
+            string input = (sender as TextBox)?.Text;
+            if (!Regex.IsMatch(input ?? throw new NullReferenceException(), @"^\d{1,2}$"))
             {
-                (sender as TextBox).Foreground = Brushes.Red;
-                LockButtons();
+                ((TextBox)sender).Foreground = Brushes.Red;
+                this.LockButtons();
                 return;
             }
 
-            IsValidClasses = true;
-            UnlockButtons();
+            this.isValidClasses = true;
+            this.UnlockButtons();
         }
 
-        private void TbxObjects_TextChanged(object sender, TextChangedEventArgs e)
+        /// <summary>
+        /// The tbx objects text changed.
+        /// </summary>
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The e.
+        /// </param>
+        private void TbxObjectsTextChanged(object sender, TextChangedEventArgs e)
         {
-            (sender as TextBox).Foreground = Brushes.Black;
-            string input = (sender as TextBox).Text;
-            if (!Regex.IsMatch(input, @"^\d{1,4}$"))
+            ((TextBox)sender).Foreground = Brushes.Black;
+            var input = ((TextBox)sender)?.Text;
+            if (!Regex.IsMatch(input ?? throw new NullReferenceException(), @"^\d{1,6}$"))
             {
-                (sender as TextBox).Foreground = Brushes.Red;
-                LockButtons();
+                ((TextBox)sender).Foreground = Brushes.Red;
+                this.LockButtons();
                 return;
             }
-            IsValidObjects = true;
-            UnlockButtons();
+
+            this.isValidObjects = true;
+            this.UnlockButtons();
         }
 
+        /// <summary>
+        /// The lock buttons.
+        /// </summary>
         private void LockButtons()
         {
-            if (BtnCalculate != null && BtnGenerate != null)
+            if (this.BtnCalculate != null && this.BtnGenerate != null)
             {
-                BtnCalculate.IsEnabled = false;
-                BtnGenerate.IsEnabled = false;
-            }       
-        }
+                this.BtnCalculate.IsEnabled = false;
+                this.BtnGenerate.IsEnabled = false;
+            }
 
-        private void UnlockButtons()
-        {
-            if (IsValidClasses && IsValidObjects)
+            if (this.BtnMaxMin != null && !this.isValidObjects)
             {
-                BtnCalculate.IsEnabled = true;
-                BtnGenerate.IsEnabled = true;
+                this.BtnMaxMin.IsEnabled = false;
             }
         }
 
-        private void BtnGenerate_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// The unlock buttons.
+        /// </summary>
+        private void UnlockButtons()
         {
-            core.DoGenerate(Convert.ToInt32(TbxClasses.Text), Convert.ToInt32(TbxObjects.Text), 
-                (int)GrdHelper.ActualHeight, (int)GrdHelper.ActualWidth);
-            DrawAll(core);
+            if (this.isValidClasses && this.isValidObjects)
+            {
+                this.BtnCalculate.IsEnabled = true;
+                this.BtnGenerate.IsEnabled = true;
+            }
+
+            if (this.isValidObjects)
+            {
+                this.BtnMaxMin.IsEnabled = true;
+            }
         }
 
-        private void BtnCalculate_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// The btn generate click.
+        /// </summary>
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The e.
+        /// </param>
+        private void BtnGenerateClick(object sender, RoutedEventArgs e)
         {
-            core.DoCalculate(Convert.ToInt32(TbxClasses.Text), Convert.ToInt32(TbxObjects.Text),
-                (int)GrdHelper.ActualHeight, (int)GrdHelper.ActualWidth);
-            DrawAll(core);
+            var classesCount = Convert.ToInt32(this.TbxClasses.Text);
+            var objectsCount = Convert.ToInt32(this.TbxObjects.Text);
+
+            if (classesCount > objectsCount)
+            {
+                MessageBox.Show("Classes is more than objects", "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            this.myCore.DoGenerate(
+                classesCount,
+                objectsCount,
+                (int)this.GrdHelper.ActualHeight,
+                (int)this.GrdHelper.ActualWidth);
+            this.FillRandomColor(this._brushes, classesCount);
+            this.DrawAll(this.myCore);
         }
 
+        /// <summary>
+        /// The fill random color.
+        /// </summary>
+        /// <param name="colors">
+        /// The colors.
+        /// </param>
+        /// <param name="count">
+        /// The count.
+        /// </param>
+        private void FillRandomColor(List<Brush> colors, int count)
+        {
+            var rand = new Random();
+            for (int i = 0; i < count; i++)
+            {
+                colors.Add(
+                    new SolidColorBrush(
+                        Color.FromRgb((byte)rand.Next(0, 256), (byte)rand.Next(0, 256), (byte)rand.Next(0, 256))));
+            }
+        }
+
+        /// <summary>
+        /// The btn calculate_ click.
+        /// </summary>
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The e.
+        /// </param>
+        private async void BtnCalculateClick(object sender, RoutedEventArgs e)
+        {
+            this.GrdControls.IsEnabled = false;
+            this.myCore.DoMeansValidate();
+            do
+            {
+                this.DrawAll(this.myCore);
+                await Task.Delay(1000);
+            }
+            while (this.myCore.DoKMeanIteration(this.myCore.Classes, this.myCore.Points));
+            this.GrdControls.IsEnabled = true;
+        }
+
+        /// <summary>
+        /// The draw all.
+        /// </summary>
+        /// <param name="core">
+        /// The core.
+        /// </param>
         private void DrawAll(Core core)
         {
             DrawingGroup drawingGroup = new DrawingGroup();
-            Random random = new Random();
-            foreach (var kClass in core.Classes)
+            int id = 0;
+            foreach (var meansClass in core.Classes)
             {
-                DrawClass(kClass, drawingGroup, random);
+                this.DrawClass(meansClass, drawingGroup, id);
+                id++;
             }
-            ImgMain.Source = new DrawingImage(drawingGroup);
 
-
+            this.ImgMain.Source = new DrawingImage(drawingGroup);
         }
 
-        private void DrawClass(KClass kClass, DrawingGroup drawingGroup, Random random)
+        /// <summary>
+        /// The draw class.
+        /// </summary>
+        /// <param name="meansClass">
+        /// The k class.
+        /// </param>
+        /// <param name="drawingGroup">
+        /// The drawing group.
+        /// </param>
+        /// <param name="classId">
+        /// The class Id.
+        /// </param>
+        private void DrawClass(KClass meansClass, DrawingGroup drawingGroup, int classId)
         {
             GeometryGroup geometryEllipsesGroup = new GeometryGroup();
-            foreach (var point in kClass.Points)
+            foreach (var point in meansClass.Points)
             {
-                geometryEllipsesGroup.Children.Add(point == kClass.Center
+                geometryEllipsesGroup.Children.Add(point == meansClass.Center
                     ? new EllipseGeometry(point, ClassRadius, ClassRadius)
                     : new EllipseGeometry(point, ObjectRadius, ObjectRadius));
-            }        
-            Brush brush = new SolidColorBrush(Color.FromRgb((byte)random.Next(0, 256), 
-                (byte)random.Next(0, 256), (byte)random.Next(0, 256)));
+            }    
+            
+            Brush brush = this._brushes[classId];
             GeometryDrawing geometryDrawing = new GeometryDrawing(brush, new Pen(brush, 1), geometryEllipsesGroup);
             drawingGroup.Children.Add(geometryDrawing);
         }
