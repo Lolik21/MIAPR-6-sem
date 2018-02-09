@@ -28,7 +28,7 @@
             <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
                 <Button x:Name="BtnGenerate" Content="Generate" Margin="3"  FontSize="22" FontFamily="Tahoma"  Width="112" Height="33" Click="BtnGenerateClick"/>
                 <Button x:Name="BtnCalculate"  Content="Calculate" Margin="3" FontSize="22" FontFamily="Tahoma"  Width="112" Height="33" Click="BtnCalculateClick"/>
-                <Button x:Name="BtnMaxMin"  Content="Max Min" Margin="3" FontSize="22" FontFamily="Tahoma"  Width="112" Height="33" Click="BtnCalculateClick"/>
+                <Button x:Name="BtnMaxMin"  Content="Max Min" Margin="3" FontSize="22" FontFamily="Tahoma"  Width="112" Height="33" Click="BtnMaxMinClick"/>
             </StackPanel>
         </Grid>
 

@@ -259,5 +259,30 @@ namespace K_Means
             GeometryDrawing geometryDrawing = new GeometryDrawing(brush, new Pen(brush, 1), geometryEllipsesGroup);
             drawingGroup.Children.Add(geometryDrawing);
         }
+
+        /// <summary>
+        /// The btn max min click.
+        /// </summary>
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The e.
+        /// </param>
+        private async void BtnMaxMinClick(object sender, RoutedEventArgs e)
+        {
+            this.GrdControls.IsEnabled = false;
+            int objCount = Convert.ToInt32(this.TbxObjects.Text);
+            this.myCore.MaxMinInit(objCount, (int)this.GrdHelper.ActualHeight, (int)this.GrdHelper.ActualWidth);
+            this.FillRandomColor(this._brushes, 100);
+            do
+            {
+                this.DrawAll(this.myCore);
+                await Task.Delay(1000);
+            }
+            while (this.myCore.DoMaxMinIteration(this.myCore.Classes,this.myCore.Points));
+
+            this.GrdControls.IsEnabled = true;
+        }
     }
 }

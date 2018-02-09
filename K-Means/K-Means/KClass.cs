@@ -31,5 +31,10 @@ namespace K_Means
         /// Gets or sets the far.
         /// </summary>
         public Point Far { get; set; }
+
+        /// <summary>
+        /// Gets or sets the max.
+        /// </summary>
+        public double Max { get; set; }
     }
 }

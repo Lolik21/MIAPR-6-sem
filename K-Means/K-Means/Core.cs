@@ -13,6 +13,7 @@ namespace K_Means
     using System.Collections.Generic;
     using System.Linq;
     using System.Windows;
+    using System.Windows.Documents;
 
     /// <summary>
     /// The core.
@@ -92,39 +93,64 @@ namespace K_Means
             meansClass.Points = new List<Point> { meansClass.Center };
             this.Classes.Add(meansClass);
 
-            Point farPoint = this.FindFarPoint(this.Points, meansClass);
+            double tmp = 0;
+            Point farPoint = this.FindFarPoint(this.Points, meansClass,ref tmp);
             meansClass = new KClass() { Center = farPoint };
             meansClass.Points = new List<Point> { farPoint };
+            this.Classes.Add(meansClass);
             this.FillClasses(this.Classes, this.Points);
         }
 
-        public void DoMaxMinIteration(List<KClass> classes, List<Point> points)
+        /// <summary>
+        /// The do max min iteration.
+        /// </summary>
+        /// <param name="classes">
+        /// The classes.
+        /// </param>
+        /// <param name="points">
+        /// The points.
+        /// </param>
+        /// <returns>
+        /// The <see cref="bool"/>.
+        /// </returns>
+        public bool DoMaxMinIteration(List<KClass> classes, List<Point> points)
         {
             
             List<KClass> tempClasses = new List<KClass>();
+            Point tmpPoint = new Point();
+            double tmp2 = double.MinValue;
             foreach (var meansClass in classes)
             {
-                Point far = this.FindFarPoint(meansClass.Points, meansClass);
+                double tmp = 0;
+                Point far = this.FindFarPoint(meansClass.Points, meansClass, ref tmp);
+                meansClass.Max = tmp;
                 meansClass.Far = far;
-            }
-
-            double avr = classes.Average(myClass => PointHelper.GetPointsDistance(myClass.Far, myClass.Center)) / 2;
-
-            foreach (var meansClass in classes)
-            {
-                double dist = PointHelper.GetPointsDistance(meansClass.Center, meansClass.Far);
-                if (dist > avr)
+                if (tmp > tmp2)
                 {
-                    var tmpMeansClass = new KClass() { Center = meansClass.Far };
-                    tmpMeansClass.Points = new List<Point> { meansClass.Far };
-                    tempClasses.Add(tmpMeansClass);
+                    tmpPoint = meansClass.Far;
+                    tmp2 = tmp;
                 }
             }
 
-            classes.AddRange(tempClasses);
+            List<double> list = new List<double>();
 
-            this.FillClasses(classes,points);
+            for (int i = 0; i < classes.Count-1; i++)
+            {
+                list.Add(PointHelper.GetPointsDistance(classes[i].Center, classes[i+1].Center));
+            }
 
+            double avr = list.Average() / 2;
+
+            if (tmp2 > avr)
+            {
+                var tmpMeansClass = new KClass() { Center = tmpPoint };
+                tmpMeansClass.Points = new List<Point> { tmpPoint };
+                classes.Add(tmpMeansClass);
+                this.FillClasses(classes, points);
+                return true;
+            }
+            this.FillClasses(classes, points);
+            return false;
         }
 
         /// <summary>
@@ -140,8 +166,7 @@ namespace K_Means
         /// The <see cref="bool"/>.
         /// </returns>
         public bool DoKMeanIteration(List<KClass> classes, List<Point> points)
-        {
-            this.ClearClasses(classes);
+        {           
             this.FillClasses(classes, points);
             return this.ChangeCenters(classes);
         }
@@ -183,6 +208,7 @@ namespace K_Means
         /// </param>
         private void FillClasses(List<KClass> classes, List<Point> points)
         {
+            this.ClearClasses(classes);
             foreach (var point in points)
             {
                 this.AddNearestPointToClass(point, classes);
@@ -218,7 +244,19 @@ namespace K_Means
             }
         }
 
-        private Point FindFarPoint(List<Point> points, KClass meansClass)
+        /// <summary>
+        /// The find far point.
+        /// </summary>
+        /// <param name="points">
+        /// The points.
+        /// </param>
+        /// <param name="meansClass">
+        /// The means class.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Point"/>.
+        /// </returns>
+        private Point FindFarPoint(List<Point> points, KClass meansClass, ref double dist)
         {
             double maxDistance = double.MinValue;
             Point farPoint = new Point();
@@ -232,6 +270,7 @@ namespace K_Means
                 }
             }
 
+            dist = maxDistance;
             return farPoint;
         }
 
