@@ -5,30 +5,29 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:K_Means"
         mc:Ignorable="d"
-        Title="MainWindow" Height="393" Width="721">
+        Title="MainWindow" Height="393" Width="609">
 
     <Grid Background="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="266*"/>
             <RowDefinition Height="55"/>
         </Grid.RowDefinitions>
-        <Grid x:Name="GrdControls" Height="53" Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="713">
+        <Grid Height="53" Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="601">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="354*"/>
-                <ColumnDefinition Width="359*"/>
+                <ColumnDefinition Width="365*"/>
+                <ColumnDefinition Width="236*"/>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <TextBox x:Name="TbxObjects" HorizontalAlignment="Center" Height="33" TextWrapping="Wrap" Text="Objects" VerticalAlignment="Center" Width="172"  AutomationProperties.HelpText="Objects" FontSize="22" TextChanged="TbxObjectsTextChanged"/>
-                <TextBox x:Name="TbxClasses" HorizontalAlignment="Center" Height="33" TextWrapping="Wrap" Text="Classes" VerticalAlignment="Center" Width="172"  Grid.Column="1" AutomationProperties.HelpText="Classes" FontSize="22" TextChanged="TbxClassesTextChanged"/>
+                <TextBox x:Name="TbxObjects" HorizontalAlignment="Center" Height="33" TextWrapping="Wrap" Text="Objects" VerticalAlignment="Center" Width="172"  AutomationProperties.HelpText="Objects" FontSize="22" TextChanged="TbxObjects_TextChanged"/>
+                <TextBox x:Name="TbxClasses" HorizontalAlignment="Center" Height="33" TextWrapping="Wrap" Text="Classes" VerticalAlignment="Center" Width="172"  Grid.Column="1" AutomationProperties.HelpText="Classes" FontSize="22" TextChanged="TbxClasses_TextChanged"/>
             </Grid>
             <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
-                <Button x:Name="BtnGenerate" Content="Generate" Margin="3"  FontSize="22" FontFamily="Tahoma"  Width="112" Height="33" Click="BtnGenerateClick"/>
-                <Button x:Name="BtnCalculate"  Content="Calculate" Margin="3" FontSize="22" FontFamily="Tahoma"  Width="112" Height="33" Click="BtnCalculateClick"/>
-                <Button x:Name="BtnMaxMin"  Content="Max Min" Margin="3" FontSize="22" FontFamily="Tahoma"  Width="112" Height="33" Click="BtnCalculateClick"/>
+                <Button x:Name="BtnGenerate" Content="Generate" Margin="3"  FontSize="22" FontFamily="Tahoma"  Width="112" Height="33" Click="BtnGenerate_Click"/>
+                <Button x:Name="BtnCalculate"  Content="Calculate" Margin="3" FontSize="22" FontFamily="Tahoma"  Width="112" Height="33" Click="BtnCalculate_Click"/>
             </StackPanel>
         </Grid>
 
