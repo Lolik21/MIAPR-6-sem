@@ -5,30 +5,47 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Perseptron"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="503.331" Width="1141.004">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="134*"/>
-            <ColumnDefinition Width="208*"/>
+            <ColumnDefinition Width="139*"/>
+            <ColumnDefinition Width="203*"/>
             <ColumnDefinition Width="227*"/>
             <ColumnDefinition Width="223*"/>
         </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Column="0">
-            <Label x:Name="tbxClassesCount" ></Label>
+        <StackPanel Grid.Column="0" >
+            <Label FontSize="18" Content="Количество классов"></Label>
+            <TextBox FontSize="18" x:Name="tbxClasses"></TextBox>
+            <Label FontSize="18" Content="Количество образов"></Label>
+            <TextBox FontSize="18" x:Name="tbxObjects"></TextBox>
+            <Label FontSize="18" Content="Количество признаков"></Label>
+            <TextBox FontSize="18" x:Name="tbxAttributes"></TextBox>
+            <Button FontSize="18" x:Name="btnCalculate" Content="Классифицировать" Click="btnCalculate_Click"></Button>
         </StackPanel>
-        
+
         <Grid Grid.Column="1">
-            
+            <ListView FontSize="18" x:Name="lvClasses">
+            </ListView>
         </Grid>
 
         <Grid Grid.Column="2">
-            
+            <ListView FontSize="18" x:Name="lvFunctions">
+            </ListView>
         </Grid>
 
         <Grid Grid.Column="3">
-            
+            <StackPanel>
+                <ScrollViewer>
+                    <StackPanel x:Name="stackBoxes" Height="400">
+
+                    </StackPanel>
+                </ScrollViewer>
+               
+                <Button x:Name="btnCheck" Content="Проверить" Click="btnCheck_Click"/>
+                <Label x:Name="tbxFounded" FontSize="30" Content="" HorizontalContentAlignment="Center" FontWeight="Bold"></Label>
+            </StackPanel>
         </Grid>
-        
+
     </Grid>
 </Window>
