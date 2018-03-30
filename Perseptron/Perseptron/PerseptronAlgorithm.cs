@@ -88,7 +88,7 @@ namespace Perseptron
                         selectedWeight, ref IsDone, i);
                 }
                 k++;
-                if (k > 1000) IsDone = true;
+                if (k > 5000) IsDone = true;
             }
         }
 
