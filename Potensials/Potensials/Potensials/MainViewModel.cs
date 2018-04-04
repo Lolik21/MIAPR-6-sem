@@ -9,13 +9,14 @@ namespace Potensials
     using System.Collections.Generic;
 
     using OxyPlot;
+    using OxyPlot.Wpf;
 
     public class MainViewModel
     {
-        public MainViewModel()
+        public MainViewModel(List<Series> series)
         {
-            this.Title = "Example 2";
-            this.Points = new List<DataPoint>
+            this.Title = "Разделяющая функция";
+            this.TestPoints = new List<DataPoint>
                               {
                                   new DataPoint(0, 4),
                                   new DataPoint(10, 13),
@@ -28,6 +29,6 @@ namespace Potensials
 
         public string Title { get; private set; }
 
-        public IList<DataPoint> Points { get; private set; }
+        public IList<DataPoint> TestPoints { get; private set; }
     }
 }

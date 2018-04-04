@@ -7,9 +7,6 @@
         xmlns:local="clr-namespace:Potensials"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Window.DataContext>
-        <local:MainViewModel/>
-    </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="359*"/>
@@ -42,10 +39,8 @@
         </StackPanel>
         <Button Grid.Row="1" x:Name="btnTeach" FontSize="24" Content="Обучить" Click="btnTeach_Click"></Button>
         <Label x:Name="lblFunction" Grid.Column="2" Grid.Row="1" FontSize="19" Content="Разделяющая функция" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
-        <oxy:Plot x:Name="mainPlot"  Title="{Binding Title}" Grid.Column="2">
-            <oxy:Plot.Series>
-                <oxy:LineSeries ItemsSource="{Binding Points}"/>
-            </oxy:Plot.Series>
+        <oxy:Plot x:Name="mainPlot"  Title="Разделяющая функция" Grid.Column="2">
+            
         </oxy:Plot>
     </Grid>
 </Window>

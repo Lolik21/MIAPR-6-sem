@@ -1,5 +1,5 @@
 ﻿using OxyPlot;
-using OxyPlot.Series;
+using OxyPlot.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +25,16 @@ namespace Potensials
         private readonly List<Point>[] points = new List<Point>[2];
 
         public Function separetFunction = null;
+        private List<Series> Series { get; set; }
+        public List<DataPoint> TestPoints { get; private set; } = new List<DataPoint>
+                              {
+                                  new DataPoint(0, 4),
+                                  new DataPoint(10, 13),
+                                  new DataPoint(20, 15),
+                                  new DataPoint(30, 16),
+                                  new DataPoint(40, 12),
+                                  new DataPoint(50, 12)
+                              };
 
         public MainWindow()
         {
@@ -39,6 +49,11 @@ namespace Potensials
             class2point2y1.Text = "-2";
             points[0] = new List<Point>();
             points[1] = new List<Point>();
+
+            LineSeries lineSeries = new LineSeries { ItemsSource = this.TestPoints };
+            LineSeries lineSeries1 = new LineSeries { ItemsSource = new List<DataPoint> { new DataPoint(3,4) },  };
+            mainPlot.Series.Add(lineSeries);
+            mainPlot.Series.Add(lineSeries1);
         }
 
         private void btnTeach_Click(object sender, RoutedEventArgs e)
