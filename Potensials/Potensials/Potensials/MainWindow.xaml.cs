@@ -50,14 +50,35 @@ namespace Potensials
             points[0] = new List<Point>();
             points[1] = new List<Point>();
 
-            LineSeries lineSeries = new LineSeries { ItemsSource = this.TestPoints };
-            LineSeries lineSeries1 = new LineSeries { ItemsSource = new List<DataPoint> { new DataPoint(3,4) },  };
+            
+
+           
+        }
+
+        private void DrawSeries(List<DataPoint> points, Color color)
+        {
+            LineSeries lineSeries = new LineSeries { ItemsSource = points, Color = color };
             mainPlot.Series.Add(lineSeries);
+            mainPlot.InvalidatePlot();
+        }
+
+        private void DrawMarker(int x, int y, Color color)
+        {
+            LineSeries lineSeries1 = new LineSeries
+            {
+                ItemsSource = new List<DataPoint>
+                { new DataPoint(x,y) },
+                MarkerType = MarkerType.Circle,
+                MarkerSize = 5,
+                MarkerFill = color
+            };
             mainPlot.Series.Add(lineSeries1);
+            mainPlot.InvalidatePlot();
         }
 
         private void btnTeach_Click(object sender, RoutedEventArgs e)
         {
+
             var potintials = new Potintials();
             var teaching = new Point[2][];
 
@@ -81,6 +102,64 @@ namespace Potensials
             separetFunction = potintials.GetFunction(teaching);
             lblFunction.Content = separetFunction.ToString();
 
+            DrawAllMarkers(this.points);
+            DrawFunction();
+        }
+
+        private void DrawAllMarkers(List<Point>[] points)
+        {
+            foreach (Point point in points[0])
+            {
+                DrawMarker((int)point.X, (int)point.Y, Colors.Plum);
+            }
+
+            foreach (Point point in points[1])
+            {
+                DrawMarker((int)point.X, (int)point.Y, Colors.Green);
+            }
+
+        }
+
+        private void DrawFunction()
+        {
+            List<DataPoint> points1 = new List<DataPoint>();
+            List<DataPoint> points2 = new List<DataPoint>();
+            int sign = 0;
+            bool ToOtherCollection = false;
+            for (double x = -5; x < 5; x += 0.1)
+            {
+                x = Math.Round(x, 4);
+
+                double y = separetFunction.GetY(x);
+
+                if (sign == 0)
+                {
+                    if (y > 0) sign = 1;
+                    else sign = -1;
+                }
+                
+                if (!ToOtherCollection)
+                {
+                    if (!((y > 0 && sign == 1) || (y < 0 && sign == -1)))
+                    {
+                        ToOtherCollection = true;
+                    }
+                }
+                
+                if (ToOtherCollection)
+                {
+                    points2.Add(new DataPoint(x, y));
+                }
+                else
+                {
+                    points1.Add(new DataPoint(x, y));
+                }
+
+                
+            }
+
+            DrawSeries(points1, Colors.Red);
+            DrawSeries(points2, Colors.Red);
         }
     }
 }
