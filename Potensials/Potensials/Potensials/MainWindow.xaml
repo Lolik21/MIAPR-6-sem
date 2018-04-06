@@ -26,6 +26,11 @@
             <Label Content="    Точка 2"></Label>
             <TextBox x:Name="class1point2x1"></TextBox>
             <TextBox x:Name="class1point2y1"></TextBox>
+
+            <Label Content="X"></Label>
+            <TextBox x:Name="tbX"></TextBox>
+            <Label Content="Y"></Label>
+            <TextBox x:Name="tbY"></TextBox>
         </StackPanel>
         <StackPanel Grid.Column="1" Grid.RowSpan="2">
             <Label Content="Класс 1"></Label>
@@ -38,6 +43,7 @@
             <TextBox x:Name="class2point2y1"></TextBox>
         </StackPanel>
         <Button Grid.Row="1" x:Name="btnTeach" FontSize="24" Content="Обучить" Click="btnTeach_Click"></Button>
+        <Button Grid.Row="1" Grid.Column="1" x:Name="btnPrint" FontSize="24" Content="Определить" Click="btnPrint_Click"></Button>
         <Label x:Name="lblFunction" Grid.Column="2" Grid.Row="1" FontSize="19" Content="Разделяющая функция" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
         <oxy:Plot x:Name="mainPlot"  Title="Разделяющая функция" Grid.Column="2">
         </oxy:Plot>

@@ -78,6 +78,8 @@ namespace Potensials
 
         private void btnTeach_Click(object sender, RoutedEventArgs e)
         {
+            mainPlot.Series.Clear();
+            mainPlot.InvalidatePlot();
 
             var potintials = new Potintials();
             var teaching = new Point[2][];
@@ -110,14 +112,13 @@ namespace Potensials
         {
             foreach (Point point in points[0])
             {
-                DrawMarker((int)point.X, (int)point.Y, Colors.Plum);
+                DrawMarker((int)point.X, (int)point.Y, Colors.Green);
             }
 
             foreach (Point point in points[1])
             {
-                DrawMarker((int)point.X, (int)point.Y, Colors.Green);
+                DrawMarker((int)point.X, (int)point.Y, Colors.Yellow);
             }
-
         }
 
         private void DrawFunction()
@@ -160,6 +161,31 @@ namespace Potensials
 
             DrawSeries(points1, Colors.Red);
             DrawSeries(points2, Colors.Red);
+        }
+
+        private void btnPrint_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                int x = int.Parse(tbX.Text);
+                int y = int.Parse(tbY.Text);
+                Point point = new Point(x, y);
+                int classNumber = separetFunction.GetValue(point) >= 0 ? 0 : 1;
+                points[classNumber].Add(point);
+                if (classNumber == 1)
+                {
+                    DrawMarker(x, y, Colors.Yellow);
+                }
+                else
+                {
+                    DrawMarker(x, y, Colors.Green);
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("Error", ex.Message);
+            }
+            
         }
     }
 }
