@@ -1,0 +1,32 @@
+﻿<Window x:Class="HierarchicalGrouping.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:dataGrid2D="http://gu.se/DataGrid2D"
+        xmlns:local="clr-namespace:HierarchicalGrouping"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="53*"/>
+            <ColumnDefinition Width="35*"/>
+        </Grid.ColumnDefinitions>
+        <Image x:Name="ResultImage"></Image>
+        <Grid Grid.Column="1">
+            <StackPanel VerticalAlignment="Top">
+                <DataGrid x:Name="mainDataGrid" HeadersVisibility="None" AutoGenerateColumns="True"
+                        dataGrid2D:ItemsSource.RowsSource="{Binding Distanses}" Height="300" />
+                <TextBox x:Name="tbCount">
+                    
+                </TextBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
+                <Button FontSize="18" x:Name="btnGenerate" Content="Generate" Padding="5" Click="btnGenerate_Click"></Button>
+                <Button FontSize="18" x:Name="btnMinimum" Content="Minimum"  Padding="5" Click="btnMinimum_Click"></Button>
+                <Button FontSize="18" x:Name="btnMaximum" Content="Maximum"  Padding="5" Click="btnMaximum_Click"></Button>
+            </StackPanel>
+        </Grid>
+
+    </Grid>
+</Window>
