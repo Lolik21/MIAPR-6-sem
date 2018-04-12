@@ -22,7 +22,7 @@ namespace HierarchyAlgorithm
             this.width = width;
             Height = heght;
             XStep = width/(elementsCount + 1);
-            currentX = XStep/2;
+            currentX = XStep/2 + 30;
         }
 
         protected int Height { get; private set; }
@@ -92,8 +92,8 @@ namespace HierarchyAlgorithm
                 textGroup.Children.Add(GetTextGeometry(line.From + new Vector(-2, 5), line.XName));
                 textGroup.Children.Add(GetTextGeometry(new Point(0, line.From.Y), line.YName));
             }
-            result.Children.Add(new GeometryDrawing(new SolidColorBrush(Colors.Red), new Pen(new SolidColorBrush(Colors.Red),2), geometryGroup));
-            result.Children.Add(new GeometryDrawing(new SolidColorBrush(Colors.Blue), new Pen(new SolidColorBrush(Colors.Blue), 2), horisontalGroup));
+            result.Children.Add(new GeometryDrawing(new SolidColorBrush(Colors.Black), new Pen(new SolidColorBrush(Colors.Black),2), geometryGroup));
+            result.Children.Add(new GeometryDrawing(new SolidColorBrush(Colors.Black), new Pen(new SolidColorBrush(Colors.Black), 2), horisontalGroup));
             result.Children.Add(new GeometryDrawing(MainBrush, MainPen, textGroup));
             return result;
         }

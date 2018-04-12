@@ -1,0 +1,48 @@
+﻿<Window x:Class="Images.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Images"
+        mc:Ignorable="d"
+        Title="Images" Height="900" Width="1600">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="299*"/>
+            <ColumnDefinition Width="99*"/>
+        </Grid.ColumnDefinitions>
+        <Canvas VerticalAlignment="Stretch" 
+                HorizontalAlignment="Stretch"  
+                x:Name="mainCanvas" 
+                MouseDown="mainCanvas_MouseDown" 
+                Background="Transparent"
+                Grid.Column="0">
+        </Canvas>
+        <Grid Grid.Column="1" Background="White">
+            <StackPanel>
+                <StackPanel VerticalAlignment="Top" HorizontalAlignment="Center" Orientation="Horizontal">
+                    <Button x:Name="btnIPhone" Height="150" Width="180" Margin="10" FontSize="30" Content="IPhone" Click="btnIPhone_Click">
+                    </Button>
+                    <Button x:Name="btnAndroid" Height="150" Width="180" FontSize="30" Content="Android" Click="btnAndroid_Click">
+                    </Button>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center">
+                    <Button x:Name="btnIphoneApp" Height="150" Width="180" Margin="10" FontSize="30" Content="IPhone APP" Click="btnIphoneApp_Click">
+                    </Button>
+                    <Button x:Name="btnAndroidApp" Height="150" Width="180" FontSize="30" Content="Android APP" Click="btnAndroidApp_Click">
+                    </Button>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center">
+                    <Button x:Name="btnIphoneLogo" Height="150" Width="180" Margin="10" FontSize="30" Content="IPhone logo" Click="btnIphoneLogo_Click">
+                    </Button>
+                    <Button x:Name="btnAndroidLogo" Height="150" Width="180" FontSize="30" Content="Android logo" Click="btnAndroidLogo_Click">
+                    </Button>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel VerticalAlignment="Bottom">
+                <Button x:Name="btnClear" Height="150" Content="Clear" FontSize="50" Margin="10" Click="btnClear_Click"/>
+                <Button x:Name="btnAnalyze" Height="150" Content="Analyze" FontSize="50" Margin="10" Click="btnAnalyze_Click"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>
