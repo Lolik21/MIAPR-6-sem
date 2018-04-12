@@ -38,6 +38,21 @@ namespace Images
 
         public Image ImageToDraw { get; set; }
 
+        private void Clear()
+        {
+            AndroidApps.Clear();
+            Androids.Clear();
+            IPhoneApps.Clear();
+            Apples.Clear();
+            AndroidLogo = null;
+            AppleLogo = null;
+            mainCanvas.Children.Clear();
+            nitherAppleApps.Clear();
+            nitherAndroidApps.Clear();
+            AndroidAppRectangles.Clear();
+            IphoneAppRectangles.Clear();
+        }
+
         public MainWindow()
         {
             InitializeComponent();
@@ -53,16 +68,7 @@ namespace Images
             nitherAppleApps = new List<Rectangle>();
         }
 
-        private void Clear()
-        {
-            AndroidApps.Clear();
-            Androids.Clear();
-            IPhoneApps.Clear();
-            Apples.Clear();
-            AndroidLogo = null;
-            AppleLogo = null;
-            mainCanvas.Children.Clear();
-        }
+
 
         private void btnIPhone_Click(object sender, RoutedEventArgs e)
         {
