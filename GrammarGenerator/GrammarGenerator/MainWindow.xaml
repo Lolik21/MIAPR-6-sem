@@ -1,0 +1,56 @@
+﻿<Window x:Class="GrammarGenerator.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GrammarGenerator"
+        mc:Ignorable="d"
+        Title="Grammar Generator by Ilya Kremniou" Height="450" Width="800">
+    <Grid Background="AntiqueWhite">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="307*"/>
+            <ColumnDefinition Width="89*"/>
+        </Grid.ColumnDefinitions>
+        <Grid >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="374*"/>
+                <RowDefinition Height="45*"/>
+            </Grid.RowDefinitions>
+            <TextBox x:Name="tbxChain" HorizontalAlignment="Left" Height="25" Margin="10,10,0,0" Grid.Row="1" TextWrapping="NoWrap" Text="Введите цепочку" VerticalAlignment="Top" Width="224" FontSize="16" PreviewTextInput="tbxChain_PreviewTextInput"/>
+            <Button x:Name="btnAddChain" Content="Добавить" HorizontalAlignment="Left" Margin="239,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120" Height="25" Click="btnAddChain_Click"/>
+            <Button x:Name="btnGenerateGrammar" Content="Получить G" HorizontalAlignment="Left" Margin="364,11,0,0" Grid.Row="1" VerticalAlignment="Top" Width="113" Height="25" Click="btnGenerateGrammar_Click"/>
+            <Button x:Name="btnGenerateChains" Content="Сгенерировать" HorizontalAlignment="Left" Margin="482,11,0,0" Grid.Row="1" VerticalAlignment="Top" Width="122" Height="25" Click="btnGenerateChains_Click"/>
+            <Grid >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="27*"/>
+                    <RowDefinition Height="160*"/>
+                </Grid.RowDefinitions>
+                <TextBlock x:Name="tblkResultGrammar" TextWrapping="Wrap" Text="Грамматика" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15" />
+                <TextBlock x:Name="tblkResultChains" HorizontalAlignment="Stretch" Grid.Row="1" TextWrapping="Wrap" 
+                           Text="" 
+                           FontSize="15" VerticalAlignment="Stretch" Background="White"/>
+            </Grid>
+        </Grid>
+        <Grid Grid.Column="1" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="293*"/>
+                <RowDefinition Height="126*"/>
+            </Grid.RowDefinitions>
+            <ListView x:Name="lvChains" Margin="10,10,10,0">
+                <TextBlock>caaab</TextBlock>
+                <TextBlock>bbaab</TextBlock>
+                <TextBlock>caab</TextBlock>
+                <TextBlock>bbab</TextBlock>
+                <TextBlock>cab</TextBlock>
+                <TextBlock>bbb</TextBlock>
+                <TextBlock>cb</TextBlock>
+            </ListView>
+            <TextBox x:Name="tbxWordsCount" HorizontalAlignment="Left" Height="23" Margin="10,58,0,0" Grid.Row="1" TextWrapping="Wrap" Text="7" VerticalAlignment="Top" Width="158" MaxLength="2" PreviewTextInput="tbxWordsCount_PreviewTextInput"/>
+            <TextBox x:Name="tbxMinDeepLevel" HorizontalAlignment="Left" Height="23" Margin="10,30,0,0" Grid.Row="1" TextWrapping="Wrap" Text="5" VerticalAlignment="Top" Width="67" MaxLength="2" PreviewTextInput="tbxMinDeepLevel_PreviewTextInput"/>
+            <Label Content="Глубина рекурсии" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Width="158" HorizontalContentAlignment="Center" Height="26" Grid.Row="1"/>
+            <TextBox x:Name="tbxMaxDeepLevel" HorizontalAlignment="Left" Height="23" Margin="101,30,0,0" Grid.Row="1" TextWrapping="Wrap" Text="10" VerticalAlignment="Top" Width="67" MaxLength="2" PreviewTextInput="tbxMaxDeepLevel_PreviewTextInput"/>
+            <Button x:Name="btnDeleteChain" Content="Удалить" HorizontalAlignment="Left" Margin="10,91,0,0" Grid.Row="1" VerticalAlignment="Top" Width="158" Height="25" Click="btnDeleteChain_Click"/>
+        </Grid>
+
+    </Grid>
+</Window>
