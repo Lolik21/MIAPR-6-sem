@@ -10,17 +10,107 @@ namespace GrammarGenerator
     {
         public static Grammar GenerateGrammar(List<string> chains)
         {
-            return null;
+            int index = 1;
+            Grammar grammar = new Grammar();
+            grammar.Links.Clear();
+            foreach (var chain in chains)
+            {
+                ProcessOneChain(grammar, chain,ref index);
+            }
+            GetRecursiveGrammars(grammar);
+
+            return grammar;
         }
 
-        private static void GetNotRecursiveGrammar()
+        private static void ProcessOneChain(Grammar grammar, string chain, ref int index)
+        {
+            for (int i = 0; i < chain.Length; i++)
+            {
+                if (i == 0)
+                {
+                    grammar.Links.Add(new StartLink
+                    {
+                        StartSumbol = "S",
+                        MeadbleSumbol = chain[i].ToString()
+                    });
+                    if (chain.Length > i + 1)
+                    {
+                        grammar.Links.Last().NextHope = "A" + Convert.ToString(index);
+                        index++;
+                    }
+                }
+                else
+                {
+                    if (i == chain.Length - 1)
+                    {
+                        grammar.Links.Add(new EndLink
+                        {
+                            StartSumbol = "A" + Convert.ToString(index - 1),
+                            MeadbleSumbol = chain[i].ToString()
+                        });
+                    }
+                    else
+                    {
+                        grammar.Links.Add(new MeadleLink
+                        {
+                            StartSumbol = "A" + Convert.ToString(index - 1),
+                            MeadbleSumbol = chain[i].ToString(),
+                            NextHope = "A" + Convert.ToString(index)
+                        });
+                        index++;
+                    }
+                }
+            }
+        }
+
+        private static void GetStringFromChain()
         {
 
         }
 
-        private static void GetRecursiveGrammar()
+        private static void GetRecursiveGrammars(Grammar grammar)
         {
+            int i = 0;
+            while(i < grammar.Links.Count-1)
+            {
+                bool endOfPair = false;
+                int startInd = i;
+                int endInd = i;
+                while (grammar.Links[i] is MeadleLink && grammar.Links[i+1] is MeadleLink && !endOfPair)
+                {
+                    if (grammar.Links[i].MeadbleSumbol == grammar.Links[i+1].MeadbleSumbol)
+                    {
+                        endInd += 1;
+                        i++;
+                    }
+                    else
+                    {
+                        endOfPair = true;
+                    }             
+                }
+                if (!endOfPair) i++;
 
+                if (startInd != endInd)
+                {
+                    GetRecursiveGrammar(grammar, startInd, endInd);
+                }    
+            }
+        }
+
+        private static void GetRecursiveGrammar(Grammar grammar, int startInd, int endInd)
+        {
+            Link link1 = grammar.Links[startInd];
+            Link link2 = grammar.Links[startInd + 1];
+            Link link3 = grammar.Links[endInd + 1];
+
+            link1.NextHope = link1.StartSumbol;
+            link2.StartSumbol = link1.StartSumbol;
+            link2.NextHope = link3.StartSumbol;
+
+            if (startInd + 2 <= endInd)
+            {
+                grammar.Links.RemoveRange(startInd + 2, endInd - startInd - 1);
+            }
         }
 
         private static void SimplifyGrammar()

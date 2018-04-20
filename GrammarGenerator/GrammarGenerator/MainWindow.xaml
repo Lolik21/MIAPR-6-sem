@@ -37,13 +37,7 @@
                 <RowDefinition Height="126*"/>
             </Grid.RowDefinitions>
             <ListView x:Name="lvChains" Margin="10,10,10,0">
-                <TextBlock>caaab</TextBlock>
-                <TextBlock>bbaab</TextBlock>
-                <TextBlock>caab</TextBlock>
-                <TextBlock>bbab</TextBlock>
-                <TextBlock>cab</TextBlock>
-                <TextBlock>bbb</TextBlock>
-                <TextBlock>cb</TextBlock>
+                
             </ListView>
             <TextBox x:Name="tbxWordsCount" HorizontalAlignment="Left" Height="23" Margin="10,58,0,0" Grid.Row="1" TextWrapping="Wrap" Text="7" VerticalAlignment="Top" Width="158" MaxLength="2" PreviewTextInput="tbxWordsCount_PreviewTextInput"/>
             <TextBox x:Name="tbxMinDeepLevel" HorizontalAlignment="Left" Height="23" Margin="10,30,0,0" Grid.Row="1" TextWrapping="Wrap" Text="5" VerticalAlignment="Top" Width="67" MaxLength="2" PreviewTextInput="tbxMinDeepLevel_PreviewTextInput"/>

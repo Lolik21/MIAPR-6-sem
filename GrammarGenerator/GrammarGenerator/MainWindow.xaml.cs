@@ -67,6 +67,10 @@ namespace GrammarGenerator
 
         private void btnGenerateGrammar_Click(object sender, RoutedEventArgs e)
         {
+            List<string> chains = lvChains.Items.Cast<string>().ToList();
+
+            grammar = Generator.GenerateGrammar(chains);
+
             tblkResultGrammar.Text = grammar.ToString();
         }
 
